@@ -43,8 +43,7 @@ This workflow essentially fetches calendar data from two sources (CSV and JSON),
 
 Try using the link to import the workflow:
 
-
-https://n8n.io/workflows/import?data=eydub2Rlcyc6IFt7J25hbWUnOiAnTWFudWFsIFRyaWdnZXInLCAndHlwZSc6ICduOG4tbm9kZXMtYmFzZS5tYW51YWwnLCAndHlwZVZlcnNpb24nOiAxLCAncG9zaXRpb24nOiBbNTAsIDIwMF19LCB7J3BhcmFtZXRlcnMnOiB7J3VybCc6ICdodHRwOi8veG1sY2FsZW5kYXIucnUvZGF0YS9ydS8yMDIyL2NhbGVuZGFyLmNzdicsICdyZXNwb25zZUZvcm1hdCc6ICdmaWxlJ30sICduYW1lJzogJ0ZldGNoIENTVicsICd0eXBlJzogJ244bi1ub2Rlcy1iYXNlLmh0dHBSZXF1ZXN0JywgJ3R5cGVWZXJzaW9uJzogMSwgJ3Bvc2l0aW9uJzogWzI1MCwgMTAwXX1dLCAnY29ubmVjdGlvbnMnOiB7fX0=
+https://gist.githubusercontent.com/MLegkovskis/c51b1c6da1aa920663c8218c8f40a898/raw/e674e5c7b7b4086570728b298761f4e3c92ad2c3/n8n-hw.json
 
 
 If it does not work - use the .json file import.
