@@ -1,0 +1,245 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "http://xmlcalendar.ru/data/ru/2022/calendar.csv",
+        "responseFormat": "file",
+        "options": {}
+      },
+      "name": "Fetch CSV",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        960,
+        580
+      ],
+      "id": "f7de46d6-201c-4ba7-aaf9-18272c191c37"
+    },
+    {
+      "parameters": {
+        "url": "http://xmlcalendar.ru/data/ru/2022/calendar.json",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "Fetch JSON",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        960,
+        780
+      ],
+      "id": "b7395c56-7962-42c9-be67-e9b6791aef1f"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Parse CSV",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        580
+      ],
+      "id": "e9ec0390-be80-4a61-b561-0f1753fad4a5"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "jsonParsed",
+              "value": "={{JSON.parse($json[\"body\"])}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set JSON",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        780
+      ],
+      "id": "2759d52e-d017-46b2-80d9-2d77142380ad"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "areEqual",
+              "value": "={{JSON.stringify($json[\"Parse CSV\"][0]) === JSON.stringify($json[\"Set JSON\"][0]) ? \"true\" : \"false\"}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Compare Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        680
+      ],
+      "id": "64ded7fc-68d7-48d3-ad5c-5859549edb6e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"areEqual\"]}}",
+              "value2": "true"
+            }
+          ]
+        }
+      },
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        680
+      ],
+      "id": "552632fa-65bf-43f0-98c9-b6a2eb5a5bd7"
+    },
+    {
+      "parameters": {},
+      "name": "Are Identical",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        580
+      ],
+      "id": "2aaeaa27-8215-4186-8f05-5dc225ea7ca6"
+    },
+    {
+      "parameters": {},
+      "name": "Not Identical",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        780
+      ],
+      "id": "5b9d87b8-b2e8-4b74-9834-8872974bff1e"
+    },
+    {
+      "parameters": {},
+      "id": "68ba50cc-0b67-4803-aad1-5750b6bb093f",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        740,
+        680
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Fetch CSV": {
+      "main": [
+        [
+          {
+            "node": "Parse CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch JSON": {
+      "main": [
+        [
+          {
+            "node": "Set JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse CSV": {
+      "main": [
+        [
+          {
+            "node": "Compare Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set JSON": {
+      "main": [
+        [
+          {
+            "node": "Compare Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Data": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Are Identical",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Not Identical",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Fetch CSV",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "42e93276-9159-4990-8288-e02fff3a6a86",
+  "id": "z1El89T760t2L2sQ",
+  "meta": {
+    "instanceId": "b919140ab782cd8feb8f936ed5650d895b6e4bd89b9730cb197d39b426bd3f29"
+  },
+  "tags": []
+}
